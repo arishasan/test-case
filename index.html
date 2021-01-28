@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<small style="color: red">Example : (Input) ll aku akan jatuh, (Output) ak<b>u</b> akan jatuh. <br/> Command available => w = first word next line, l = next word, b = first word current line</small>
+	<hr>
+	<p>
+		<label for="text" id="text">Output will be here</label>
+	</p>
+	<hr>
+	<input type="text" id="inputfield" value="llwwllbb Bahwa dalam suatu perjuangan kita harus">
+	<button type="button" id="process">Process</button>
+	<button type="button" id="reset">Reset</button>
+</body>
+<script
+src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs="
+crossorigin="anonymous"></script>
+
+<script>
+	
+	$(function(){
+
+		var getHTML = $("#text");
+		// var currentLine = 0;
+		// var currentWord = 0;
+		// var countedLine = 0;
+		// var countedWords = 0;
+		var getReturnedText = "";
+
+
+		$('#reset').click(function(){
+			$('#text').html(getHTML);
+			$('#inputfield').val('');
+		});
+
+		$('#process').click(function(){
+
+			let inputVal = $('#inputfield').val();
+			if(inputVal == ""){
+				alert('Error');
+				$('#inputfield').focus();
+			}else{
+
+				let boom = inputVal.split(" ");
+				let command = boom[0];
+				let countedCommand = command.length;
+
+				// let constantStartLine = 1;
+				// let finalWords = 1;
+				// let currentWord = 0;
+				// let countedWords = 0;
+
+				let currLine = 1;
+				let currentWord = 1;
+				let lastWord = 1;
+				let currWordGlobal = 1;
+
+				let stringLength = 0;
+				// let stringMain = "";
+
+				for (var init = 1; init < boom.length; init++){
+					let tempWords = boom[init];
+					let tempCountedWords = tempWords.length;
+					stringLength += tempCountedWords;
+
+					// if(init + 1 > stringLength){
+					// 	stringMain += tempWords;
+					// }else{
+					// 	stringMain += tempWords + " ";
+					// }
+				}
+
+				// console.log(stringMain);
+
+				
+					// console.log(command[cmd])
+					// let alreadyInput = false;
+					var incrementLine = false;
+					for (var cmd = 0; cmd < countedCommand; cmd++) {
+
+						let maxLine = boom.length - 1;
+
+						// console.log(currLine + " - " +maxLine)
+
+						if(command[cmd] == 'l'){
+							// currLine += 1;
+							if(currLine > maxLine){
+								// console.log('123')
+
+								// currentWord = lastWord;
+								// currLine -= 1;
+
+							}else{
+
+								// currLine -= 1;
+
+								let getLine = boom[currLine];
+								let lengthLine = getLine.length;
+
+								if(currentWord + 1 > lengthLine){
+									currLine += 1;
+									lastWord = currentWord;
+									currentWord = 1;
+								}else{
+									lastWord = currentWord;
+									currentWord += 1;
+								}
+
+								if(currLine > maxLine){
+									currentWord = lastWord;
+									currLine -= 1;
+								}
+
+
+							}
+
+						}else if(command[cmd] == 'b'){
+
+							if(currLine > maxLine){
+
+							}else{
+
+								if(currLine == 1){
+									currentWord = 1;
+									currLine = 1
+								}else{
+
+									if(currentWord > 1){
+										currentWord = 1;
+									}else{
+										currLine -= 1;
+										currentWord = 1;
+									}
+
+								}
+
+							}
+							
+
+						}else if(command[cmd] == 'w'){
+
+							if(currLine > maxLine){
+
+							}else{
+
+								if(currLine == maxLine){
+									currentWord = 1;
+									currLine = maxLine
+								}else{
+
+									currLine += 1;
+									currentWord = 1;
+
+								}
+
+							}
+
+						}else{
+
+						}
+
+					}
+
+
+
+					console.log(currentWord + " - " + currLine + " --------------------------------------------- LAST - " + lastWord);
+
+					for (var i = 1; i < boom.length; i++) {
+
+						let tempCurrentLine = boom[i];
+
+						// console.log(tempCurrentLine)
+
+						let retStr = '';
+
+						for (var ii = 0; ii < tempCurrentLine.length; ii++) {
+							console.log(tempCurrentLine[ii]);
+							// console.log(currentWord + " - " + ii);
+							if(currLine == i){
+
+								if(ii == (currentWord - 1) && i == currLine){
+									retStr += "<b>"+tempCurrentLine[ii]+"</b>";
+									// currentWord == ii;
+								}else{
+									retStr += tempCurrentLine[ii];
+								}
+
+								
+							}else{
+								retStr += tempCurrentLine[ii];
+
+								// currentWord += 1;
+							}
+						}
+						
+						getReturnedText += retStr + " ";
+						// console.log(retStr)
+
+					}
+
+					$('#text').html(getReturnedText);
+					getReturnedText = "";
+
+
+
+
+				}
+
+			});
+
+
+	});
+
+</script>
+
+</html>
